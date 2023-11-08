@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+import sys
+
+print(sys.version)
+print('pandas version', pd.__version__)
+pd.set_option('display.max_columns', 500)
+
+df = pd.read_csv(r'C:\Users\jorda\OneDrive\Desktop\CS RIT\Intro to Big Data\Project\AnimeList.csv')
+
+def create_df(s):
+    unique_values = df[s].unique()
+    cur_df = pd.DataFrame({s: unique_values})
+    cur_df = cur_df.dropna()
+    cur_df = cur_df.reset_index(drop=True)
+
+    cur_df.index += 1
+    cur_df.index.name = 'id'
+
+    new_csv = "data_" + s + ".csv"
+    cur_df.to_csv(new_csv)
+    print(cur_df)
+
+create_df("source")
+create_df("studio")
+create_df("licensor")
+create_df("premiered")
+create_df("type")
